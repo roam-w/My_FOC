@@ -1,0 +1,312 @@
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * @file    usart.c
+  * @brief   This file provides code for the configuration
+  *          of the USART instances.
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2025 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
+#include "usart.h"
+
+/* USER CODE BEGIN 0 */
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+// 全局串口DMA管理器
+static UART_DMA_Manager uart2_dma_manager = {0};
+
+// 获取管理器指针
+UART_DMA_Manager* UART_GetManager(UART_HandleTypeDef *huart)
+{
+	if (huart->Instance == USART2) {
+			return &uart2_dma_manager;
+	}
+	return NULL;
+}
+/* USER CODE END 0 */
+
+UART_HandleTypeDef huart2;
+DMA_HandleTypeDef hdma_usart2_rx;
+DMA_HandleTypeDef hdma_usart2_tx;
+
+/* USART2 init function */
+
+void MX_USART2_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART2_Init 0 */
+
+  /* USER CODE END USART2_Init 0 */
+
+  /* USER CODE BEGIN USART2_Init 1 */
+
+  /* USER CODE END USART2_Init 1 */
+  huart2.Instance = USART2;
+  huart2.Init.BaudRate = 115200;
+  huart2.Init.WordLength = UART_WORDLENGTH_8B;
+  huart2.Init.StopBits = UART_STOPBITS_1;
+  huart2.Init.Parity = UART_PARITY_NONE;
+  huart2.Init.Mode = UART_MODE_TX_RX;
+  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART2_Init 2 */
+
+  /* USER CODE END USART2_Init 2 */
+
+}
+
+void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
+{
+
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  if(uartHandle->Instance==USART2)
+  {
+  /* USER CODE BEGIN USART2_MspInit 0 */
+
+  /* USER CODE END USART2_MspInit 0 */
+    /* USART2 clock enable */
+    __HAL_RCC_USART2_CLK_ENABLE();
+
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+    /**USART2 GPIO Configuration
+    PA2     ------> USART2_TX
+    PA3     ------> USART2_RX
+    */
+    GPIO_InitStruct.Pin = GPIO_PIN_2;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+    GPIO_InitStruct.Pin = GPIO_PIN_3;
+    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+    /* USART2 DMA Init */
+    /* USART2_RX Init */
+    hdma_usart2_rx.Instance = DMA1_Channel6;
+    hdma_usart2_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
+    hdma_usart2_rx.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_usart2_rx.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_usart2_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    hdma_usart2_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+    hdma_usart2_rx.Init.Mode = DMA_NORMAL;
+    hdma_usart2_rx.Init.Priority = DMA_PRIORITY_MEDIUM;
+    if (HAL_DMA_Init(&hdma_usart2_rx) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    __HAL_LINKDMA(uartHandle,hdmarx,hdma_usart2_rx);
+
+    /* USART2_TX Init */
+    hdma_usart2_tx.Instance = DMA1_Channel7;
+    hdma_usart2_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
+    hdma_usart2_tx.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_usart2_tx.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_usart2_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    hdma_usart2_tx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+    hdma_usart2_tx.Init.Mode = DMA_NORMAL;
+    hdma_usart2_tx.Init.Priority = DMA_PRIORITY_MEDIUM;
+    if (HAL_DMA_Init(&hdma_usart2_tx) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    __HAL_LINKDMA(uartHandle,hdmatx,hdma_usart2_tx);
+
+    /* USART2 interrupt Init */
+    HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(USART2_IRQn);
+  /* USER CODE BEGIN USART2_MspInit 1 */
+
+  /* USER CODE END USART2_MspInit 1 */
+  }
+}
+
+void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
+{
+
+  if(uartHandle->Instance==USART2)
+  {
+  /* USER CODE BEGIN USART2_MspDeInit 0 */
+
+  /* USER CODE END USART2_MspDeInit 0 */
+    /* Peripheral clock disable */
+    __HAL_RCC_USART2_CLK_DISABLE();
+
+    /**USART2 GPIO Configuration
+    PA2     ------> USART2_TX
+    PA3     ------> USART2_RX
+    */
+    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_2|GPIO_PIN_3);
+
+    /* USART2 DMA DeInit */
+    HAL_DMA_DeInit(uartHandle->hdmarx);
+    HAL_DMA_DeInit(uartHandle->hdmatx);
+
+    /* USART2 interrupt Deinit */
+    HAL_NVIC_DisableIRQ(USART2_IRQn);
+  /* USER CODE BEGIN USART2_MspDeInit 1 */
+
+  /* USER CODE END USART2_MspDeInit 1 */
+  }
+}
+
+/* USER CODE BEGIN 1 */
+/**
+  * @brief  初始化串口DMA接收
+  * @param  huart: 串口句柄
+  * @param  manager: DMA管理器
+  */
+void UART_InitDMAReceiver(UART_HandleTypeDef *huart, UART_DMA_Manager *manager){
+	memset(manager, 0, sizeof(UART_DMA_Manager));
+	
+	HAL_UART_Receive_DMA(huart, manager->rx_buffer, UART_RX_BUFFER_SIZE);
+	
+	//开启串口空闲中断
+	__HAL_UART_ENABLE_IT(huart, UART_IT_IDLE);
+	
+	manager->dma_receiving = true;
+}
+
+/**
+  * @brief  重启DMA接收
+  */
+void UART_StartReceive(UART_HandleTypeDef *huart, UART_DMA_Manager *manager){
+	if (!manager->dma_receiving){
+		HAL_UART_Receive_DMA(huart, manager->rx_buffer, UART_RX_BUFFER_SIZE);
+		manager->dma_receiving = true;
+	}
+}
+
+/**
+  * @brief  获取接收到的数据（非阻塞方式）
+  * @param  buffer: 存储数据的缓冲区
+  * @param  size: 缓冲区大小
+  * @retval 是否成功获取数据
+  */
+bool UART_ReceiveData(UART_HandleTypeDef *huart, UART_DMA_Manager *manager, uint8_t *buffer, uint16_t size){
+	if (manager->rx_complete){
+		uint16_t length = manager->rx_data_length;
+		if (length > size){
+			length = size;
+		}
+		
+		memcpy(buffer, manager->rx_temp_buffer, length);
+		manager->rx_complete = false;
+		
+		UART_StartReceive(huart, manager);
+		
+		return true;
+	}
+	return false;
+}
+
+/**
+  * @brief  DMA发送数据（非阻塞方式）
+  * @param  data: 要发送的数据
+  * @param  length: 数据长度
+  * @retval 是否成功启动发送
+  */
+bool UART_SendData(UART_HandleTypeDef *huart, UART_DMA_Manager *manager, uint8_t *data, uint16_t length){
+	if (manager->dma_transmitting){
+		return false;
+	}
+	
+	if (length > UART_TX_BUFFER_SIZE || length == 0){
+		return false;
+	}
+	
+	memcpy(manager->tx_buffer, data, length);
+	manager->tx_data_length = length;
+	manager->tx_complete = false;
+	manager->dma_transmitting = true;
+	
+	if (HAL_UART_Transmit_DMA(huart, manager->tx_buffer, length) != HAL_OK){
+		manager->dma_transmitting = false;
+		return false;
+	}
+	
+	return true;
+}
+
+/**
+  * @brief  检查DMA发送是否完成
+  */
+bool UART_IsTxComplete(UART_DMA_Manager *manager){
+	return !manager->dma_transmitting;
+}
+
+/**
+  * @brief  注册接收完成回调函数
+  */
+void UART_RegisterRxCallback(UART_DMA_Manager *manager, UART_RxCallback callback)
+{
+    manager->rx_callback = callback;
+}
+
+/**
+  * @brief  串口空闲中断处理函数（需要在stm32f1xx_it.c的USART2_IRQHandler中调用）
+  */
+void UART_IDLE_IRQHandler(UART_HandleTypeDef *huart, UART_DMA_Manager *manager){
+	if (__HAL_UART_GET_FLAG(huart, UART_FLAG_IDLE) != RESET){
+		__HAL_UART_CLEAR_IDLEFLAG(huart);
+		
+		HAL_UART_DMAStop(huart);
+		
+		uint16_t remain_data = __HAL_DMA_GET_COUNTER(huart->hdmarx);
+		manager->rx_data_length = UART_RX_BUFFER_SIZE - remain_data;
+		
+		if (manager->rx_data_length > 0){
+			memcpy(manager->rx_temp_buffer, manager->rx_buffer, manager->rx_data_length);
+			manager->rx_complete = true;
+			
+			if (manager->rx_callback != NULL){
+				manager->rx_callback(manager->rx_temp_buffer, manager->rx_data_length);
+			}
+		}
+		
+		manager->dma_receiving = false;
+		UART_StartReceive(huart, manager);
+	}
+}
+
+/**
+  * @brief  DMA发送完成回调函数（由HAL库自动调用）
+  */
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
+	if (huart->Instance == USART2){
+		uart2_dma_manager.dma_transmitting = false;
+		uart2_dma_manager.tx_complete = true;
+	}
+}
+
+/**
+  * @brief  DMA接收完成回调函数（由HAL库自动调用）
+  */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+	if (huart->Instance == USART2){
+		uart2_dma_manager.dma_receiving = false;
+		
+		UART_StartReceive(huart, &uart2_dma_manager);
+	}
+}
+
+/* USER CODE END 1 */
