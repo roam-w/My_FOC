@@ -358,3 +358,4 @@ uint8_t _AS5600_WriteRegister(AS5600_HandleTypeDef *has5600, uint8_t reg, uint16
     
     return AS5600_OK;
 }
+
