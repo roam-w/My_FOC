@@ -40,9 +40,9 @@ double_foc\main.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
 double_foc\main.o: D:\Keil5\ARM\ARMCC\Bin\..\include\string.h
 double_foc\main.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdarg.h
 double_foc\main.o: ../Core/Inc/gpio.h
-double_foc\main.o: ../Hardware/as5600.h
-double_foc\main.o: D:\Keil5\ARM\ARMCC\Bin\..\include\math.h
+double_foc\main.o: ../Hardware/AS5600.h
 double_foc\main.o: ../Hardware/pid.h
 double_foc\main.o: ../Hardware/current_sense.h
 double_foc\main.o: ../Hardware/MyFOC.h
-double_foc\main.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+double_foc\main.o: D:\Keil5\ARM\ARMCC\Bin\..\include\math.h
+double_foc\main.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdio.h

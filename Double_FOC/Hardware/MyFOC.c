@@ -22,17 +22,15 @@ float _electricAngle(float shaft_angle){
 }
 
 // 设置PWM到控制器输出
-void setPWM(float Ua, float Ub, float Uc, float* dc){
+void setPWM(float Ua, float Ub, float Uc){
 	Ua = _constrain(Ua, 0.0f, voltage_limit);
 	Ub = _constrain(Ub, 0.0f, voltage_limit);
 	Uc = _constrain(Uc, 0.0f, voltage_limit);
+	
 	dc_a = _constrain(Ua / voltage_power_supply, 0.0f, 1.0f);
 	dc_b = _constrain(Ub / voltage_power_supply, 0.0f, 1.0f);
 	dc_c = _constrain(Uc / voltage_power_supply, 0.0f, 1.0f);
 	
-	dc[0] = dc_a*255;
-	dc[1] = dc_b*255;
-	dc[2] = dc_c*255;
 	
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, dc_a*255);
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, dc_b*255);
@@ -40,7 +38,7 @@ void setPWM(float Ua, float Ub, float Uc, float* dc){
 }
 
 // 逆变换输出PWM
-void setPhaseVoltage(float Uq, float Ud, float angle_el, float* dc){
+void setPhaseVoltage(float Uq, float Ud, float angle_el){
 	angle_el = _normalizeAngle(angle_el);
 	
 	//帕克逆变换
@@ -52,7 +50,7 @@ void setPhaseVoltage(float Uq, float Ud, float angle_el, float* dc){
 	Ub = (sqrt(3)*Ubeta-Ualpha)/2 + voltage_power_supply/2;
 	Uc = (-Ualpha-sqrt(3)*Ubeta)/2 + voltage_power_supply/2;
 	
-	setPWM(Ua, Ub, Uc, dc);
+	setPWM(Ua, Ub, Uc);
 }
 
 // 变换获取电流iq

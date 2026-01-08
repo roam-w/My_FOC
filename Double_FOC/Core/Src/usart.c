@@ -255,6 +255,33 @@ bool UART_IsTxComplete(UART_DMA_Manager *manager){
 }
 
 /**
+  * @brief  以二进制格式发送float（4字节）
+  * @param  value: 要发送的浮点数
+  * @retval 发送是否成功
+  */
+bool UART_SendFloat(UART_HandleTypeDef *huart, UART_DMA_Manager *manager, float value)
+{
+    // 将float转换为字节数组
+    uint8_t *byte_ptr = (uint8_t*)&value;
+    
+    // 添加帧头（可选，用于标识这是float数据）
+    // 需要7个字节：2字节帧头 + 1字节类型 + 4字节float数据
+    uint8_t frame[7] = {0};  // 应该是7，不是6！
+    
+    frame[0] = 0xAA;  // 帧头1
+    frame[1] = 0x55;  // 帧头2
+    frame[2] = 0x01;  // 数据类型：float
+    
+    // 复制4字节float数据
+    frame[3] = byte_ptr[0];  // 字节0（最低位，小端模式）
+    frame[4] = byte_ptr[1];  // 字节1
+    frame[5] = byte_ptr[2];  // 字节2
+    frame[6] = byte_ptr[3];  // 字节3（最高位）
+    
+    return UART_SendData(huart, manager, frame, 7);
+}
+
+/**
   * @brief  注册接收完成回调函数
   */
 void UART_RegisterRxCallback(UART_DMA_Manager *manager, UART_RxCallback callback)

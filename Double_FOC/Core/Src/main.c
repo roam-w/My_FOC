@@ -27,11 +27,11 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "as5600.h"
+#include "AS5600.h"
 #include "pid.h"
 #include "current_sense.h"
 #include "MyFOC.h"
-#include <stdlib.h>
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -54,7 +54,7 @@
 /* USER CODE BEGIN PV */
 void UART_Rx_Callback(uint8_t *data, uint16_t length){
 	UART_DMA_Manager *manager = UART_GetManager(&huart2);
-	UART_SendData(&huart2, manager, data, length);
+//	UART_SendData(&huart2, manager, data, length;
 }
 
 Pid_HandleTypedef hpid_speed;
@@ -62,8 +62,8 @@ Pid_HandleTypedef hpid_torque;
 
 CurrentSense_HandleTypeDef current_u, current_v;
 
-AS5600_HandleTypeDef h_as5600;
-float angle = 0;
+AS5600_HandleTypeDef has5600;
+float angle = 123;
 float motor_target = 5;
 
  float open_loop_timestamp = 0;
@@ -129,12 +129,7 @@ int main(void)
 	UART_RegisterRxCallback(manager, UART_Rx_Callback);
 	
 	/* 初始化AS5600 */
-	AS5600_Init(&h_as5600, &hi2c1);
-	// 检查AS5600磁铁状态
-	if(AS5600_Begin(&h_as5600) != AS5600_OK)
-	{
-		Error_Handler();
-	}
+	AS5600_Init(&has5600, &hi2c1);
 	
 //	//PID初始化 力-速串级pid
 //	Pid_Init(&hpid_torque, 0.01, 0.01, 0, 6, 100000);
@@ -154,25 +149,26 @@ int main(void)
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);	
-	
-	float dc[3] = {0};
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		uint32_t now_us = micros();
-		float Ts = (now_us - open_loop_timestamp) * 1e-6f;
-		if (Ts <= 0 || Ts > 0.5f) Ts = 1e-3f;
-		
 		UART_ReceiveData(&huart2, manager, (uint8_t*)&motor_target, sizeof(motor_target));
-		angle = _normalizeAngle(angle + motor_target * Ts);
 		
-		float Uq = 12.6;
-		setPhaseVoltage(Uq, 0, _electricAngle(angle), dc);
-
-		open_loop_timestamp = now_us;
+		float angle_r = AS5600_GetRadian(&has5600);
+		angle = AS5600_GetTotalAngle(&has5600);
+		float Kp = 0.133;
+		setPhaseVoltage(_constrain(Kp*(motor_target-(-1)*angle), -6, 6), 0, _electricAngle(angle_r));	// 位置闭环
+//		setPhaseVoltage(motor_target, 0, _electricAngle(angle_r));	//电压力矩闭环
+		
+//		char buffer[6];
+//		sprintf(buffer, "%f", angle);
+//		while (!UART_IsTxComplete(manager));
+//		UART_SendData(&huart2, manager, (uint8_t*)buffer, 6);
+//		while (!UART_IsTxComplete(manager));
+//		UART_SendData(&huart2, manager, " \r\n", strlen(" \r\n")); 
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

@@ -72,6 +72,7 @@ void UART_StartReceive(UART_HandleTypeDef *huart, UART_DMA_Manager *manager);
 bool UART_ReceiveData(UART_HandleTypeDef *huart, UART_DMA_Manager *manager, uint8_t *buffer, uint16_t size);
 bool UART_SendData(UART_HandleTypeDef *huart, UART_DMA_Manager *manager, uint8_t *data, uint16_t length);
 bool UART_IsTxComplete(UART_DMA_Manager *manager);
+bool UART_SendFloat(UART_HandleTypeDef *huart, UART_DMA_Manager *manager, float value);
 void UART_RegisterRxCallback(UART_DMA_Manager *manager, UART_RxCallback callback);
 void UART_IDLE_IRQHandler(UART_HandleTypeDef *huart, UART_DMA_Manager *manager);
 
