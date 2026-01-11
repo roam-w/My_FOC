@@ -31,7 +31,10 @@
 #include "pid.h"
 #include "current_sense.h"
 #include "MyFOC.h"
+#include "common.h"
+#include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -52,19 +55,14 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-void UART_Rx_Callback(uint8_t *data, uint16_t length){
-	UART_DMA_Manager *manager = UART_GetManager(&huart2);
-//	UART_SendData(&huart2, manager, data, length;
-}
-
 Pid_HandleTypedef hpid_speed;
 Pid_HandleTypedef hpid_torque;
 
 CurrentSense_HandleTypeDef current_u, current_v;
 
 AS5600_HandleTypeDef has5600;
-float angle = 123;
-float motor_target = 5;
+float angle = 0;
+float motor_target = 60;
 
  float open_loop_timestamp = 0;
 /* USER CODE END PV */
@@ -88,7 +86,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	UART_DMA_Manager *manager;
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -116,24 +114,20 @@ int main(void)
   MX_I2C2_Init();
   MX_TIM3_Init();
   MX_USART2_UART_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-	manager = UART_GetManager(&huart2);
-	if (!manager) {
-			Error_Handler();
-	}
-	
-	//初始化串口DMA接收
-	UART_InitDMAReceiver(&huart2, manager);
-	
-	//注册接收回调函数
-	UART_RegisterRxCallback(manager, UART_Rx_Callback);
+	// 启动定时器
+	HAL_TIM_Base_Start(&htim2);
+
+	// 初始化DMA接收
+	UART2_DMA_Init_Receive();
 	
 	/* 初始化AS5600 */
 	AS5600_Init(&has5600, &hi2c1);
 	
-//	//PID初始化 力-速串级pid
-//	Pid_Init(&hpid_torque, 0.01, 0.01, 0, 6, 100000);
-//	Pid_Init(&hpid_speed, 0.01, 0.01, 0, 6, 100000);
+	//PID初始化 力-速串级pid
+	Pid_Init(&hpid_torque, 0.01, 0.01, 0, 6, 100000);
+	Pid_Init(&hpid_speed, 0.013, 0.02, 0, 6, 100000);
 //	
 //	// 电流检测初始化
 //	CurrentSense_Init(&current_u, &hadc1, ADC_CHANNEL_0, 0.01f);
@@ -149,26 +143,44 @@ int main(void)
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);	
+	
+//	UART_DMA_Send(&huart2, "Hello World!\r\n", strlen("Hello World!\r\n"));
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		UART_ReceiveData(&huart2, manager, (uint8_t*)&motor_target, sizeof(motor_target));
-		
 		float angle_r = AS5600_GetRadian(&has5600);
-		angle = AS5600_GetTotalAngle(&has5600);
-		float Kp = 0.133;
-		setPhaseVoltage(_constrain(Kp*(motor_target-(-1)*angle), -6, 6), 0, _electricAngle(angle_r));	// 位置闭环
+
+////		setPhaseVoltage(_constrain(Kp*(motor_target-(-1)*angle), -6, 6), 0, _electricAngle(angle_r));	// 位置闭环
 //		setPhaseVoltage(motor_target, 0, _electricAngle(angle_r));	//电压力矩闭环
+//		
+		float velocity = AS5600_GetVelocity(&has5600);		
+		float back = Pid_Output(&hpid_speed, motor_target, (-1.0f)*velocity);
+		setPhaseVoltage(_constrain(back, -6, 6), 0, _electricAngle(angle_r));		// 速度闭环
+
+		if (UART2_DMA_Get_Received_Length() > 0)
+		{
+			uint16_t len = UART2_DMA_Get_Received_Length();
+			uint8_t *rx_data = UART2_DMA_Get_Receive_Buffer();
+			  
+			((char*)rx_data)[len] = '\0';
+			
+			motor_target = (float)atof((char*)rx_data);
+			
+			UART2_DMA_Transmit((uint8_t*)&motor_target, sizeof(motor_target));
+			// 准备下一次接收
+			UART2_DMA_Start_Receive();
+		}
 		
-//		char buffer[6];
-//		sprintf(buffer, "%f", angle);
-//		while (!UART_IsTxComplete(manager));
-//		UART_SendData(&huart2, manager, (uint8_t*)buffer, 6);
-//		while (!UART_IsTxComplete(manager));
-//		UART_SendData(&huart2, manager, " \r\n", strlen(" \r\n")); 
+		char buffer[8];
+		sprintf(buffer, "%f", velocity);
+		UART2_DMA_Wait_Transmit_Complete();
+		UART2_DMA_Transmit((uint8_t*)buffer, sizeof(buffer));
+		UART2_DMA_Wait_Transmit_Complete();
+		UART2_DMA_Transmit("\r\n", strlen("\r\n"));
+		
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

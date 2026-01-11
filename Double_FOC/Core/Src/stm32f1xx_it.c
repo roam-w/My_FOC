@@ -1,20 +1,4 @@
 /* USER CODE BEGIN Header */
-/**
-  ******************************************************************************
-  * @file    stm32f1xx_it.c
-  * @brief   Interrupt Service Routines.
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2025 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
@@ -27,32 +11,26 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
-
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -61,7 +39,6 @@ extern DMA_HandleTypeDef hdma_usart2_rx;
 extern DMA_HandleTypeDef hdma_usart2_tx;
 extern UART_HandleTypeDef huart2;
 /* USER CODE BEGIN EV */
-
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -73,12 +50,8 @@ extern UART_HandleTypeDef huart2;
 void NMI_Handler(void)
 {
   /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
-
   /* USER CODE END NonMaskableInt_IRQn 0 */
   /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
-   while (1)
-  {
-  }
   /* USER CODE END NonMaskableInt_IRQn 1 */
 }
 
@@ -88,7 +61,6 @@ void NMI_Handler(void)
 void HardFault_Handler(void)
 {
   /* USER CODE BEGIN HardFault_IRQn 0 */
-
   /* USER CODE END HardFault_IRQn 0 */
   while (1)
   {
@@ -103,7 +75,6 @@ void HardFault_Handler(void)
 void MemManage_Handler(void)
 {
   /* USER CODE BEGIN MemoryManagement_IRQn 0 */
-
   /* USER CODE END MemoryManagement_IRQn 0 */
   while (1)
   {
@@ -118,7 +89,6 @@ void MemManage_Handler(void)
 void BusFault_Handler(void)
 {
   /* USER CODE BEGIN BusFault_IRQn 0 */
-
   /* USER CODE END BusFault_IRQn 0 */
   while (1)
   {
@@ -133,7 +103,6 @@ void BusFault_Handler(void)
 void UsageFault_Handler(void)
 {
   /* USER CODE BEGIN UsageFault_IRQn 0 */
-
   /* USER CODE END UsageFault_IRQn 0 */
   while (1)
   {
@@ -148,10 +117,8 @@ void UsageFault_Handler(void)
 void SVC_Handler(void)
 {
   /* USER CODE BEGIN SVCall_IRQn 0 */
-
   /* USER CODE END SVCall_IRQn 0 */
   /* USER CODE BEGIN SVCall_IRQn 1 */
-
   /* USER CODE END SVCall_IRQn 1 */
 }
 
@@ -161,10 +128,8 @@ void SVC_Handler(void)
 void DebugMon_Handler(void)
 {
   /* USER CODE BEGIN DebugMonitor_IRQn 0 */
-
   /* USER CODE END DebugMonitor_IRQn 0 */
   /* USER CODE BEGIN DebugMonitor_IRQn 1 */
-
   /* USER CODE END DebugMonitor_IRQn 1 */
 }
 
@@ -174,10 +139,8 @@ void DebugMon_Handler(void)
 void PendSV_Handler(void)
 {
   /* USER CODE BEGIN PendSV_IRQn 0 */
-
   /* USER CODE END PendSV_IRQn 0 */
   /* USER CODE BEGIN PendSV_IRQn 1 */
-
   /* USER CODE END PendSV_IRQn 1 */
 }
 
@@ -187,11 +150,9 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
-
   /* USER CODE END SysTick_IRQn 1 */
 }
 
@@ -208,11 +169,9 @@ void SysTick_Handler(void)
 void DMA1_Channel1_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
-
   /* USER CODE END DMA1_Channel1_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_adc1);
   /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
-
   /* USER CODE END DMA1_Channel1_IRQn 1 */
 }
 
@@ -222,11 +181,9 @@ void DMA1_Channel1_IRQHandler(void)
 void DMA1_Channel6_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA1_Channel6_IRQn 0 */
-
   /* USER CODE END DMA1_Channel6_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_usart2_rx);
   /* USER CODE BEGIN DMA1_Channel6_IRQn 1 */
-
   /* USER CODE END DMA1_Channel6_IRQn 1 */
 }
 
@@ -236,11 +193,9 @@ void DMA1_Channel6_IRQHandler(void)
 void DMA1_Channel7_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA1_Channel7_IRQn 0 */
-
   /* USER CODE END DMA1_Channel7_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_usart2_tx);
   /* USER CODE BEGIN DMA1_Channel7_IRQn 1 */
-
   /* USER CODE END DMA1_Channel7_IRQn 1 */
 }
 
@@ -250,45 +205,13 @@ void DMA1_Channel7_IRQHandler(void)
 void USART2_IRQHandler(void)
 {
   /* USER CODE BEGIN USART2_IRQn 0 */
-  // 处理空闲中断
-  if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_IDLE) != RESET) {
-    // 清除空闲中断标志
-    __HAL_UART_CLEAR_IDLEFLAG(&huart2);
-    
-    // 获取管理器
-    UART_DMA_Manager* manager = UART_GetManager(&huart2);
-    if (manager) {
-      // 暂停DMA接收
-      HAL_UART_DMAStop(&huart2);
-      
-      // 计算接收到的数据长度
-      uint16_t remain_data = __HAL_DMA_GET_COUNTER(huart2.hdmarx);
-      manager->rx_data_length = 256 - remain_data;
-      
-      if (manager->rx_data_length > 0) {
-        // 复制接收到的数据到临时缓冲区
-        memcpy(manager->rx_temp_buffer, manager->rx_buffer, manager->rx_data_length);
-        manager->rx_complete = true;
-        
-        // 如果有回调函数，则调用
-        if (manager->rx_callback != NULL) {
-          manager->rx_callback(manager->rx_temp_buffer, manager->rx_data_length);
-        }
-      }
-      
-      // 重新配置DMA接收
-      manager->dma_receiving = false;
-      HAL_UART_Receive_DMA(&huart2, manager->rx_buffer, 256);
-      manager->dma_receiving = true;
-    }
-  }
+	// 处理空闲中断
+	UART2_IDLE_IRQHandler();
   /* USER CODE END USART2_IRQn 0 */
   HAL_UART_IRQHandler(&huart2);
   /* USER CODE BEGIN USART2_IRQn 1 */
-  // 其他中断处理...
   /* USER CODE END USART2_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
-
 /* USER CODE END 1 */

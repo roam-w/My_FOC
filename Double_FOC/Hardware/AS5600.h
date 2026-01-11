@@ -6,7 +6,8 @@ extern "C" {
 #endif
 
 #include "stm32f1xx_hal.h"
-
+#include "stdbool.h"
+	
 // AS5600 I2C地址
 #define AS5600_I2C_ADDRESS    0x36
 
@@ -22,6 +23,7 @@ typedef struct {
     uint16_t angle;               // 处理后角度值
 		uint16_t last_angle;        	// 上次读取角度值	
 		int16_t rotation;							// 旋转圈数
+		float total_angle;						// 累计旋转角度
 } AS5600_HandleTypeDef;
 
 // 函数声明
@@ -31,6 +33,7 @@ uint16_t AS5600_ReadAngle(AS5600_HandleTypeDef *has5600);
 float AS5600_GetDegree(AS5600_HandleTypeDef *has5600);
 float AS5600_GetRadian(AS5600_HandleTypeDef *has5600);
 float AS5600_GetTotalAngle(AS5600_HandleTypeDef *has5600);
+float AS5600_GetVelocity(AS5600_HandleTypeDef *has5600);
 
 #ifdef __cplusplus
 }

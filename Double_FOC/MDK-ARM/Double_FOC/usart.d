@@ -34,7 +34,3 @@ double_foc\usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 double_foc\usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 double_foc\usart.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
 double_foc\usart.o: D:\Keil5\ARM\ARMCC\Bin\..\include\string.h
-double_foc\usart.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdarg.h
-double_foc\usart.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-double_foc\usart.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
-double_foc\usart.o: D:\Keil5\ARM\ARMCC\Bin\..\include\ctype.h

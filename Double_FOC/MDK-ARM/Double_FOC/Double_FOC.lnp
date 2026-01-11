@@ -31,6 +31,7 @@
 "double_foc\current_sense.o"
 "double_foc\myfoc.o"
 "double_foc\pid.o"
+"double_foc\common.o"
 --strict --scatter "Double_FOC\Double_FOC.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

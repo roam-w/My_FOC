@@ -31,4 +31,5 @@ double_foc\as5600.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 double_foc\as5600.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 double_foc\as5600.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 double_foc\as5600.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
-double_foc\as5600.o: ../Core/Inc/main.h
+double_foc\as5600.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+double_foc\as5600.o: ..\Hardware\common.h

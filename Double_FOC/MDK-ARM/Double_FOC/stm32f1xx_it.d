@@ -34,5 +34,3 @@ double_foc\stm32f1xx_it.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uar
 double_foc\stm32f1xx_it.o: ../Core/Inc/stm32f1xx_it.h
 double_foc\stm32f1xx_it.o: ../Core/Inc/usart.h
 double_foc\stm32f1xx_it.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
-double_foc\stm32f1xx_it.o: D:\Keil5\ARM\ARMCC\Bin\..\include\string.h
-double_foc\stm32f1xx_it.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdarg.h

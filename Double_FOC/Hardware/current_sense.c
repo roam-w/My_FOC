@@ -1,6 +1,5 @@
 #include "current_sense.h"
-#include "main.h"
-#include "MyFOC.h"
+#include "common.h"
 
 static float ADC_ToVoltage(uint16_t adc_value);
 static uint16_t Read_ADC_Single(ADC_HandleTypeDef *hadc);

@@ -1,5 +1,5 @@
 #include "MyFOC.h"
-#include "main.h"
+//#include "main.h"
 #include "tim.h"
 
 float voltage_limit = 11;
@@ -8,7 +8,6 @@ float shaft_angle = 0;
 float zero_electric_angle = 0, Ualpha = 0, Ubeta = 0, Ua = 0, Ub = 0, Uc = 0, dc_a = 0, dc_b = 0, dc_c = 0;
 
 int PP = 7, DIR = -1;
-float Tp = 0.3;
 
 //角度归一化[0， 2*PI]
 float _normalizeAngle(float angle){
@@ -65,48 +64,3 @@ float Get_iq(float ia, float ib, float angle_el){
 	return iq;
 }
 
-
-// 低通滤波
-float LowPassFilter(float x){
-	static uint32_t last_time = 0;
-	static uint32_t last_y = 0;
-	uint32_t current_time = HAL_GetTick();
-	float dt = (current_time - last_time) / 1000.0f;
-	
-	if (dt > 0.3f){
-		last_y = x;
-		last_time = current_time;
-		return x;
-	}
-	
-	float alpha = Tp / (Tp + dt);
-	float y = alpha * last_y + (1.0f-alpha) * x;
-	last_y = y;
-	last_time = current_time;
-	return y;
-}
-
-//获取当前微秒值
-uint32_t micros(void) {
-    uint32_t ms;
-    uint32_t cnt;
-    
-    // 禁用中断以防止读取时SysTick更新
-    __disable_irq();
-    
-    ms = HAL_GetTick();           // 获取毫秒数
-    cnt = SysTick->VAL;           // 获取当前计数值
-    
-    // 检查是否在读取过程中发生了SysTick中断
-    if (SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) {
-        ms = HAL_GetTick();       // 重新读取毫秒数
-        cnt = SysTick->VAL;       // 重新读取计数值
-    }
-    
-    __enable_irq();
-    
-    // 计算微秒数
-    // SysTick通常配置为1ms重载，频率为 SystemCoreClock / 1000
-    // 所以每微秒的计数 = SystemCoreClock / 1000000
-    return ms * 1000 + ((SysTick->LOAD - cnt) * 1000 / (SystemCoreClock / 1000));
-}

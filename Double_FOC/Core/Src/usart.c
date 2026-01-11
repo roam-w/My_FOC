@@ -1,40 +1,21 @@
 /* USER CODE BEGIN Header */
-/**
-  ******************************************************************************
-  * @file    usart.c
-  * @brief   This file provides code for the configuration
-  *          of the USART instances.
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2025 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-// 全局串口DMA管理器
-static UART_DMA_Manager uart2_dma_manager = {0};
+#include <string.h>
 
-// 获取管理器指针
-UART_DMA_Manager* UART_GetManager(UART_HandleTypeDef *huart)
-{
-	if (huart->Instance == USART2) {
-			return &uart2_dma_manager;
-	}
-	return NULL;
-}
+// DMA接收相关变量
+__IO uint8_t rx_buffer[RX_BUFFER_SIZE];     // DMA接收缓冲区（循环模式）
+__IO uint16_t rx_buffer_index = 0;          // 当前接收位置索引
+__IO uint16_t rx_received_length = 0;       // 实际接收到的数据长度
+__IO bool rx_complete_flag = false;         // 接收完成标志
+
+uint8_t user_rx_buffer[RX_BUFFER_SIZE];     // 用户实际处理的缓冲区，无DMA直接写入
+
+// DMA发送相关变量
+__IO bool tx_busy_flag = false;             // 发送忙标志
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart2;
@@ -47,11 +28,9 @@ void MX_USART2_UART_Init(void)
 {
 
   /* USER CODE BEGIN USART2_Init 0 */
-
   /* USER CODE END USART2_Init 0 */
 
   /* USER CODE BEGIN USART2_Init 1 */
-
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
   huart2.Init.BaudRate = 115200;
@@ -66,7 +45,6 @@ void MX_USART2_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART2_Init 2 */
-
   /* USER CODE END USART2_Init 2 */
 
 }
@@ -78,7 +56,6 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
   if(uartHandle->Instance==USART2)
   {
   /* USER CODE BEGIN USART2_MspInit 0 */
-
   /* USER CODE END USART2_MspInit 0 */
     /* USART2 clock enable */
     __HAL_RCC_USART2_CLK_ENABLE();
@@ -106,7 +83,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     hdma_usart2_rx.Init.MemInc = DMA_MINC_ENABLE;
     hdma_usart2_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
     hdma_usart2_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-    hdma_usart2_rx.Init.Mode = DMA_NORMAL;
+    hdma_usart2_rx.Init.Mode = DMA_CIRCULAR;
     hdma_usart2_rx.Init.Priority = DMA_PRIORITY_MEDIUM;
     if (HAL_DMA_Init(&hdma_usart2_rx) != HAL_OK)
     {
@@ -135,7 +112,6 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(USART2_IRQn);
   /* USER CODE BEGIN USART2_MspInit 1 */
-
   /* USER CODE END USART2_MspInit 1 */
   }
 }
@@ -146,7 +122,6 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
   if(uartHandle->Instance==USART2)
   {
   /* USER CODE BEGIN USART2_MspDeInit 0 */
-
   /* USER CODE END USART2_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_USART2_CLK_DISABLE();
@@ -164,176 +139,179 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     /* USART2 interrupt Deinit */
     HAL_NVIC_DisableIRQ(USART2_IRQn);
   /* USER CODE BEGIN USART2_MspDeInit 1 */
-
   /* USER CODE END USART2_MspDeInit 1 */
   }
 }
 
 /* USER CODE BEGIN 1 */
 /**
-  * @brief  初始化串口DMA接收
-  * @param  huart: 串口句柄
-  * @param  manager: DMA管理器
+  * @brief  初始化DMA接收
+  * @retval None
   */
-void UART_InitDMAReceiver(UART_HandleTypeDef *huart, UART_DMA_Manager *manager){
-	memset(manager, 0, sizeof(UART_DMA_Manager));
-	
-	HAL_UART_Receive_DMA(huart, manager->rx_buffer, UART_RX_BUFFER_SIZE);
-	
-	//开启串口空闲中断
-	__HAL_UART_ENABLE_IT(huart, UART_IT_IDLE);
-	
-	manager->dma_receiving = true;
-}
-
-/**
-  * @brief  重启DMA接收
-  */
-void UART_StartReceive(UART_HandleTypeDef *huart, UART_DMA_Manager *manager){
-	if (!manager->dma_receiving){
-		HAL_UART_Receive_DMA(huart, manager->rx_buffer, UART_RX_BUFFER_SIZE);
-		manager->dma_receiving = true;
-	}
-}
-
-/**
-  * @brief  获取接收到的数据（非阻塞方式）
-  * @param  buffer: 存储数据的缓冲区
-  * @param  size: 缓冲区大小
-  * @retval 是否成功获取数据
-  */
-bool UART_ReceiveData(UART_HandleTypeDef *huart, UART_DMA_Manager *manager, uint8_t *buffer, uint16_t size){
-	if (manager->rx_complete){
-		uint16_t length = manager->rx_data_length;
-		if (length > size){
-			length = size;
-		}
-		
-		memcpy(buffer, manager->rx_temp_buffer, length);
-		manager->rx_complete = false;
-		
-		UART_StartReceive(huart, manager);
-		
-		return true;
-	}
-	return false;
-}
-
-/**
-  * @brief  DMA发送数据（非阻塞方式）
-  * @param  data: 要发送的数据
-  * @param  length: 数据长度
-  * @retval 是否成功启动发送
-  */
-bool UART_SendData(UART_HandleTypeDef *huart, UART_DMA_Manager *manager, uint8_t *data, uint16_t length){
-	if (manager->dma_transmitting){
-		return false;
-	}
-	
-	if (length > UART_TX_BUFFER_SIZE || length == 0){
-		return false;
-	}
-	
-	memcpy(manager->tx_buffer, data, length);
-	manager->tx_data_length = length;
-	manager->tx_complete = false;
-	manager->dma_transmitting = true;
-	
-	if (HAL_UART_Transmit_DMA(huart, manager->tx_buffer, length) != HAL_OK){
-		manager->dma_transmitting = false;
-		return false;
-	}
-	
-	return true;
-}
-
-/**
-  * @brief  检查DMA发送是否完成
-  */
-bool UART_IsTxComplete(UART_DMA_Manager *manager){
-	return !manager->dma_transmitting;
-}
-
-/**
-  * @brief  以二进制格式发送float（4字节）
-  * @param  value: 要发送的浮点数
-  * @retval 发送是否成功
-  */
-bool UART_SendFloat(UART_HandleTypeDef *huart, UART_DMA_Manager *manager, float value)
+void UART2_DMA_Init_Receive(void)
 {
-    // 将float转换为字节数组
-    uint8_t *byte_ptr = (uint8_t*)&value;
+    // 清除接收缓冲区
+    memset((void*)rx_buffer, 0, RX_BUFFER_SIZE);
+    rx_buffer_index = 0;
+    rx_received_length = 0;
+    rx_complete_flag = false;
     
-    // 添加帧头（可选，用于标识这是float数据）
-    // 需要7个字节：2字节帧头 + 1字节类型 + 4字节float数据
-    uint8_t frame[7] = {0};  // 应该是7，不是6！
+    // 启动DMA接收（循环模式）
+    HAL_UART_Receive_DMA(&huart2, (uint8_t*)rx_buffer, RX_BUFFER_SIZE);
     
-    frame[0] = 0xAA;  // 帧头1
-    frame[1] = 0x55;  // 帧头2
-    frame[2] = 0x01;  // 数据类型：float
-    
-    // 复制4字节float数据
-    frame[3] = byte_ptr[0];  // 字节0（最低位，小端模式）
-    frame[4] = byte_ptr[1];  // 字节1
-    frame[5] = byte_ptr[2];  // 字节2
-    frame[6] = byte_ptr[3];  // 字节3（最高位）
-    
-    return UART_SendData(huart, manager, frame, 7);
+    // 使能串口空闲中断
+    __HAL_UART_ENABLE_IT(&huart2, UART_IT_IDLE);
 }
 
 /**
-  * @brief  注册接收完成回调函数
+  * @brief  重新启动DMA接收
+  * @retval None
   */
-void UART_RegisterRxCallback(UART_DMA_Manager *manager, UART_RxCallback callback)
+void UART2_DMA_Start_Receive(void)
 {
-    manager->rx_callback = callback;
+    rx_buffer_index = 0;
+    rx_received_length = 0;
+    rx_complete_flag = false;
+    
+    // 重启DMA接收
+    HAL_UART_Receive_DMA(&huart2, (uint8_t*)rx_buffer, RX_BUFFER_SIZE);
 }
 
 /**
-  * @brief  串口空闲中断处理函数（需要在stm32f1xx_it.c的USART2_IRQHandler中调用）
+  * @brief  获取接收到的数据长度
+  * @retval 接收到的数据字节数
   */
-void UART_IDLE_IRQHandler(UART_HandleTypeDef *huart, UART_DMA_Manager *manager){
-	if (__HAL_UART_GET_FLAG(huart, UART_FLAG_IDLE) != RESET){
-		__HAL_UART_CLEAR_IDLEFLAG(huart);
-		
-		HAL_UART_DMAStop(huart);
-		
-		uint16_t remain_data = __HAL_DMA_GET_COUNTER(huart->hdmarx);
-		manager->rx_data_length = UART_RX_BUFFER_SIZE - remain_data;
-		
-		if (manager->rx_data_length > 0){
-			memcpy(manager->rx_temp_buffer, manager->rx_buffer, manager->rx_data_length);
-			manager->rx_complete = true;
-			
-			if (manager->rx_callback != NULL){
-				manager->rx_callback(manager->rx_temp_buffer, manager->rx_data_length);
-			}
-		}
-		
-		manager->dma_receiving = false;
-		UART_StartReceive(huart, manager);
-	}
+uint16_t UART2_DMA_Get_Received_Length(void)
+{
+    return rx_received_length;
 }
 
 /**
-  * @brief  DMA发送完成回调函数（由HAL库自动调用）
+  * @brief  获取接收缓冲区指针
+  * @retval 接收缓冲区指针
   */
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
-	if (huart->Instance == USART2){
-		uart2_dma_manager.dma_transmitting = false;
-		uart2_dma_manager.tx_complete = true;
-	}
+uint8_t* UART2_DMA_Get_Receive_Buffer(void)
+{
+    // 原返回：return (uint8_t*)rx_buffer;
+    return (uint8_t*)user_rx_buffer; // 改为返回用户缓冲区，数据已无累积
 }
 
 /**
-  * @brief  DMA接收完成回调函数（由HAL库自动调用）
+  * @brief  清除接收完成标志
+  * @retval None
   */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
-	if (huart->Instance == USART2){
-		uart2_dma_manager.dma_receiving = false;
-		
-		UART_StartReceive(huart, &uart2_dma_manager);
-	}
+void UART2_DMA_Clear_Receive_Flag(void)
+{
+    rx_complete_flag = false;
+}
+
+/**
+  * @brief  通过DMA发送数据
+  * @param  data: 要发送的数据指针
+  * @param  size: 数据大小
+  * @retval true: 发送成功, false: 发送失败（上一次发送未完成）
+  */
+bool UART2_DMA_Transmit(uint8_t *data, uint16_t size)
+{
+    if (tx_busy_flag || size == 0 || data == NULL)
+    {
+        return false;
+    }
+    
+    tx_busy_flag = true;
+    
+    // 启动DMA发送
+    HAL_StatusTypeDef status = HAL_UART_Transmit_DMA(&huart2, data, size);
+    
+    if (status != HAL_OK)
+    {
+        tx_busy_flag = false;
+        return false;
+    }
+    
+    return true;
+}
+
+/**
+  * @brief  检查DMA发送是否忙
+  * @retval true: 忙, false: 空闲
+  */
+bool UART2_DMA_Is_Transmit_Busy(void)
+{
+    return tx_busy_flag;
+}
+
+/**
+  * @brief  等待DMA发送完成
+  * @retval None
+  */
+void UART2_DMA_Wait_Transmit_Complete(void)
+{
+    while (tx_busy_flag)
+    {
+        // 可以添加超时机制
+        // 这里使用简单的忙等待
+    }
+}
+
+/**
+  * @brief  DMA接收完成回调函数（需要在DMA接收完成中断中调用）
+  * @retval None
+  */
+void UART2_DMA_RX_Complete_Callback(void)
+{
+    // 对于循环DMA接收，这个函数不会被调用
+    // 因为接收模式是DMA_CIRCULAR（循环模式）
+}
+
+// 串口回调函数
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
+    // 确认是USART2的发送完成回调，避免与其他UART冲突
+    if (huart->Instance == USART2)
+    {
+        // 【关键】此时才是真正的发送完成，清零忙标志
+        tx_busy_flag = false;
+    }
+}
+
+/**
+  * @brief  串口空闲中断处理函数（需要在USART2_IRQHandler中调用）
+  * @retval None
+  */
+void UART2_IDLE_IRQHandler(void)
+{
+    // 检查是否是空闲中断
+    if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_IDLE) != RESET)
+    {
+        // 1. 清除空闲中断标志（必须手动清除，避免重复触发）
+        __HAL_UART_CLEAR_IDLEFLAG(&huart2);
+        
+        // 2. 暂停DMA接收（避免拷贝数据期间，DMA继续写入rx_buffer导致数据错乱）
+        HAL_UART_DMAStop(&huart2);
+        
+        // 3. 计算接收到的有效数据长度
+        uint16_t remain_data = __HAL_DMA_GET_COUNTER(&hdma_usart2_rx);
+        rx_received_length = RX_BUFFER_SIZE - remain_data;
+        
+        // 4. 拷贝rx_buffer中的有效数据到用户处理缓冲区（解决累积的核心步骤）
+        if (rx_received_length > 0 && rx_received_length <= RX_BUFFER_SIZE)
+        {
+            // 拷贝有效数据（仅拷贝实际接收的字节数，不拷贝无用残留）
+            memcpy(user_rx_buffer, (uint8_t*)rx_buffer, rx_received_length);
+            
+            // 5. 清空用户缓冲区的剩余部分（彻底解决数据累积，避免下一次数据残留）
+            memset(user_rx_buffer + rx_received_length, 0, RX_BUFFER_SIZE - rx_received_length);
+        }
+        
+        // 6. 设置接收完成标志，通知主函数处理用户缓冲区数据
+        rx_complete_flag = true;
+        
+        // 7. 重启DMA循环接收（继续接收下一帧数据，不影响后续传输）
+        HAL_UART_Receive_DMA(&huart2, (uint8_t*)rx_buffer, RX_BUFFER_SIZE);
+        
+        // 备注：此时主函数应读取user_rx_buffer中的数据，而非原rx_buffer
+    }
 }
 
 /* USER CODE END 1 */

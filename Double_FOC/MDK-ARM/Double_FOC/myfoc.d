@@ -32,5 +32,5 @@ double_foc\myfoc.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 double_foc\myfoc.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 double_foc\myfoc.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 double_foc\myfoc.o: D:\Keil5\ARM\ARMCC\Bin\..\include\math.h
-double_foc\myfoc.o: ../Core/Inc/main.h
 double_foc\myfoc.o: ../Core/Inc/tim.h
+double_foc\myfoc.o: ../Core/Inc/main.h

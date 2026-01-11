@@ -1,5 +1,7 @@
 #include "AS5600.h"
-#include "main.h"
+//#include "tim.h"
+#include "common.h"
+
 
 /**
   * @brief  初始化AS5600编码器
@@ -15,7 +17,8 @@ void AS5600_Init(AS5600_HandleTypeDef *has5600, I2C_HandleTypeDef *hi2c)
     has5600->angle = 0;
 		has5600->last_angle = 0;
 		has5600->rotation = 0;
-}
+		has5600->total_angle = 0;
+}	
 
 /**
   * @brief  读取AS5600原始角度值（0-4095）
@@ -88,7 +91,7 @@ float AS5600_GetRadian(AS5600_HandleTypeDef *has5600){
 	return raw / 2048.0f * 3.1415926f;
 }
 
-//获取累计角度
+//获取累计角度(度)
 float AS5600_GetTotalAngle(AS5600_HandleTypeDef *has5600){
 	uint16_t last_angle = has5600->last_angle;
 	uint16_t current_angle = AS5600_ReadRawAngle(has5600);
@@ -101,6 +104,56 @@ float AS5600_GetTotalAngle(AS5600_HandleTypeDef *has5600){
 	float total_angle = has5600->rotation * 360.0f + current_angle / 4096.0f * 360.0f;
 	
 	has5600->last_angle = current_angle;
+	has5600->total_angle = total_angle;
 	
 	return total_angle;
+}
+
+// 获取旋转速度
+float AS5600_GetVelocity(AS5600_HandleTypeDef *has5600) {
+	static uint32_t last_time = 0;
+	static float last_angle = 0;
+	static bool first_call = true;
+	
+	// 获取当前定时器计数值（单位：毫秒）
+	uint32_t current_time = TIM2->CNT;
+	
+	// 处理第一次调用
+	if (first_call) {
+			first_call = false;
+			last_angle = AS5600_GetTotalAngle(has5600);
+			last_time = current_time;
+			return 0;
+	}
+	
+	// 获取当前角度
+	float current_angle = AS5600_GetTotalAngle(has5600);
+	float angle_diff = current_angle - last_angle;
+	
+	// 计算时间差（毫秒），处理计数器溢出
+	uint32_t time_diff_ms;
+	if (current_time >= last_time) {
+			time_diff_ms = current_time - last_time;
+	} else {
+			// 计数器溢出处理
+			time_diff_ms = (65535 - last_time) + current_time;
+	}
+	
+	// 转换为秒
+	float time_diff = time_diff_ms * 1e-4f;
+	
+//	if (time_diff < 0.001f) return 0;
+
+	
+	// 计算角速度（度/秒）
+	float velocity = angle_diff / time_diff;
+	
+	// 更新状态
+	last_angle = current_angle;
+	last_time = current_time;
+	
+	// 转换为RPM（每转360度，每分钟60秒）
+	// velocity / 6.0f 相当于 (velocity / 360) * 60 = velocity / 6
+	return LowPassFilter(velocity / 6.0f);
+//	return angle_diff;
 }

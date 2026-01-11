@@ -1,6 +1,6 @@
 Dependencies for Project 'Double_FOC', Target 'Double_FOC': (DO NOT MODIFY !)
-F (startup_stm32f103xb.s)(0x695CFD62)(--cpu Cortex-M3 -g --apcs=interwork -I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0--pd "__UVISION_VERSION SETA 514" --pd "_RTE_ SETA 1" --pd "STM32F10X_MD SETA 1"--list startup_stm32f103xb.lst --xref -o double_foc\startup_stm32f103xb.o --depend double_foc\startup_stm32f103xb.d)
-F (../Core/Src/main.c)(0x695F1838)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\main.o --omf_browse double_foc\main.crf --depend double_foc\main.d)
+F (startup_stm32f103xb.s)(0x69633BD6)(--cpu Cortex-M3 -g --apcs=interwork -I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0--pd "__UVISION_VERSION SETA 514" --pd "_RTE_ SETA 1" --pd "STM32F10X_MD SETA 1"--list startup_stm32f103xb.lst --xref -o double_foc\startup_stm32f103xb.o --depend double_foc\startup_stm32f103xb.d)
+F (../Core/Src/main.c)(0x69633CCA)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\main.o --omf_browse double_foc\main.crf --depend double_foc\main.d)
 I (../Core/Inc/main.h)(0x695CE855)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x670F6C65)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x693048FC)
@@ -35,18 +35,19 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x670F6C65)
 I (../Core/Inc/adc.h)(0x693043F7)
 I (../Core/Inc/dma.h)(0x693043F7)
 I (../Core/Inc/i2c.h)(0x693043F7)
-I (../Core/Inc/tim.h)(0x693043F7)
-I (../Core/Inc/usart.h)(0x695DFA53)
+I (../Core/Inc/tim.h)(0x695FAB80)
+I (../Core/Inc/usart.h)(0x69633BC7)
 I (D:\Keil5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (D:\Keil5\ARM\ARMCC\include\string.h)(0x5475F300)
-I (D:\Keil5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
 I (../Core/Inc/gpio.h)(0x693043F7)
-I (../Hardware/AS5600.h)(0x695F1750)
+I (../Hardware/AS5600.h)(0x6960B322)
 I (../Hardware/pid.h)(0x692AEA17)
 I (../Hardware/current_sense.h)(0x692ECFA0)
-I (../Hardware/MyFOC.h)(0x695E4903)
+I (../Hardware/MyFOC.h)(0x695F1C4D)
 I (D:\Keil5\ARM\ARMCC\include\math.h)(0x5475F2FE)
+I (../Hardware/common.h)(0x6960B903)
+I (D:\Keil5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
 I (D:\Keil5\ARM\ARMCC\include\stdio.h)(0x5475F300)
+I (D:\Keil5\ARM\ARMCC\include\string.h)(0x5475F300)
 F (../Core/Src/gpio.c)(0x6932AB00)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\gpio.o --omf_browse double_foc\gpio.crf --depend double_foc\gpio.d)
 I (../Core/Inc/gpio.h)(0x693043F7)
 I (../Core/Inc/main.h)(0x695CE855)
@@ -113,7 +114,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x670F6C65)
-F (../Core/Src/dma.c)(0x695A5220)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\dma.o --omf_browse double_foc\dma.crf --depend double_foc\dma.d)
+F (../Core/Src/dma.c)(0x69611B53)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\dma.o --omf_browse double_foc\dma.crf --depend double_foc\dma.d)
 I (../Core/Inc/dma.h)(0x693043F7)
 I (../Core/Inc/main.h)(0x695CE855)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x670F6C65)
@@ -179,8 +180,8 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x670F6C65)
-F (../Core/Src/tim.c)(0x695CFD61)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\tim.o --omf_browse double_foc\tim.crf --depend double_foc\tim.d)
-I (../Core/Inc/tim.h)(0x693043F7)
+F (../Core/Src/tim.c)(0x6960AF27)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\tim.o --omf_browse double_foc\tim.crf --depend double_foc\tim.d)
+I (../Core/Inc/tim.h)(0x695FAB80)
 I (../Core/Inc/main.h)(0x695CE855)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x670F6C65)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x693048FC)
@@ -212,8 +213,8 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x670F6C65)
-F (../Core/Src/usart.c)(0x695DFACE)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\usart.o --omf_browse double_foc\usart.crf --depend double_foc\usart.d)
-I (../Core/Inc/usart.h)(0x695DFA53)
+F (../Core/Src/usart.c)(0x69633BC2)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\usart.o --omf_browse double_foc\usart.crf --depend double_foc\usart.d)
+I (../Core/Inc/usart.h)(0x69633BC7)
 I (../Core/Inc/main.h)(0x695CE855)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x670F6C65)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x693048FC)
@@ -247,11 +248,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x670F6C65)
 I (D:\Keil5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
 I (D:\Keil5\ARM\ARMCC\include\string.h)(0x5475F300)
-I (D:\Keil5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (D:\Keil5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Keil5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Keil5\ARM\ARMCC\include\ctype.h)(0x5475F300)
-F (../Core/Src/stm32f1xx_it.c)(0x695CF9D0)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\stm32f1xx_it.o --omf_browse double_foc\stm32f1xx_it.crf --depend double_foc\stm32f1xx_it.d)
+F (../Core/Src/stm32f1xx_it.c)(0x69633997)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\stm32f1xx_it.o --omf_browse double_foc\stm32f1xx_it.crf --depend double_foc\stm32f1xx_it.d)
 I (../Core/Inc/main.h)(0x695CE855)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x670F6C65)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x693048FC)
@@ -283,11 +280,9 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x670F6C65)
-I (../Core/Inc/stm32f1xx_it.h)(0x695A6F2F)
-I (../Core/Inc/usart.h)(0x695DFA53)
+I (../Core/Inc/stm32f1xx_it.h)(0x69611DD2)
+I (../Core/Inc/usart.h)(0x69633BC7)
 I (D:\Keil5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (D:\Keil5\ARM\ARMCC\include\string.h)(0x5475F300)
-I (D:\Keil5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
 F (../Core/Src/stm32f1xx_hal_msp.c)(0x693043F8)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\stm32f1xx_hal_msp.o --omf_browse double_foc\stm32f1xx_hal_msp.crf --depend double_foc\stm32f1xx_hal_msp.d)
 I (../Core/Inc/main.h)(0x695CE855)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x670F6C65)
@@ -878,8 +873,8 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x670F6C65)
-F (..\Hardware\AS5600.c)(0x695F1750)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\as5600.o --omf_browse double_foc\as5600.crf --depend double_foc\as5600.d)
-I (..\Hardware\AS5600.h)(0x695F1750)
+F (..\Hardware\AS5600.c)(0x69633BEA)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\as5600.o --omf_browse double_foc\as5600.crf --depend double_foc\as5600.d)
+I (..\Hardware\AS5600.h)(0x6960B322)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x670F6C65)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x693048FC)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h)(0x670F6C65)
@@ -910,8 +905,9 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x670F6C65)
-I (../Core/Inc/main.h)(0x695CE855)
-F (..\Hardware\current_sense.c)(0x692ED059)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\current_sense.o --omf_browse double_foc\current_sense.crf --depend double_foc\current_sense.d)
+I (D:\Keil5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
+I (..\Hardware\common.h)(0x6960B903)
+F (..\Hardware\current_sense.c)(0x695F1F7E)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\current_sense.o --omf_browse double_foc\current_sense.crf --depend double_foc\current_sense.d)
 I (..\Hardware\current_sense.h)(0x692ECFA0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x670F6C65)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x693048FC)
@@ -943,11 +939,9 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x670F6C65)
-I (../Core/Inc/main.h)(0x695CE855)
-I (..\Hardware\MyFOC.h)(0x695E4903)
-I (D:\Keil5\ARM\ARMCC\include\math.h)(0x5475F2FE)
-F (..\Hardware\MyFOC.c)(0x695E4903)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\myfoc.o --omf_browse double_foc\myfoc.crf --depend double_foc\myfoc.d)
-I (..\Hardware\MyFOC.h)(0x695E4903)
+I (..\Hardware\common.h)(0x6960B903)
+F (..\Hardware\MyFOC.c)(0x695F1D4A)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\myfoc.o --omf_browse double_foc\myfoc.crf --depend double_foc\myfoc.d)
+I (..\Hardware\MyFOC.h)(0x695F1C4D)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x670F6C65)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x693048FC)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h)(0x670F6C65)
@@ -979,11 +973,43 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x670F6C65)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x670F6C65)
 I (D:\Keil5\ARM\ARMCC\include\math.h)(0x5475F2FE)
+I (../Core/Inc/tim.h)(0x695FAB80)
 I (../Core/Inc/main.h)(0x695CE855)
-I (../Core/Inc/tim.h)(0x693043F7)
 F (..\Hardware\pid.c)(0x692AEA0F)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\pid.o --omf_browse double_foc\pid.crf --depend double_foc\pid.d)
 I (..\Hardware\pid.h)(0x692AEA17)
 I (../Core/Inc/main.h)(0x695CE855)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x670F6C65)
+I (../Core/Inc/stm32f1xx_hal_conf.h)(0x693048FC)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h)(0x670F6C65)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h)(0x670F6C65)
+I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x670F6C65)
+I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h)(0x670F6C65)
+I (../Drivers/CMSIS/Include/core_cm3.h)(0x670F6C5F)
+I (D:\Keil5\ARM\ARMCC\include\stdint.h)(0x5475F300)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x670F6C5F)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x670F6C5F)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x670F6C5F)
+I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h)(0x670F6C65)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x670F6C65)
+I (D:\Keil5\ARM\ARMCC\include\stddef.h)(0x5475F300)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc_ex.h)(0x670F6C65)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h)(0x670F6C65)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio_ex.h)(0x670F6C65)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_exti.h)(0x670F6C65)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h)(0x670F6C65)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_ex.h)(0x670F6C65)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h)(0x670F6C65)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h)(0x670F6C65)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h)(0x670F6C65)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h)(0x670F6C65)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h)(0x670F6C65)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h)(0x670F6C65)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x670F6C65)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x670F6C65)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x670F6C65)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x670F6C65)
+F (..\Hardware\common.c)(0x6960FC26)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Hardware-I C:\Users\yogurt\Desktop\code\c\keil5\FOC\Double_FOC\MDK-ARM\RTE-I D:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o double_foc\common.o --omf_browse double_foc\common.crf --depend double_foc\common.d)
+I (..\Hardware\common.h)(0x6960B903)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x670F6C65)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x693048FC)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h)(0x670F6C65)
